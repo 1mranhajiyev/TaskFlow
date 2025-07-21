@@ -1,1 +1,0 @@
-web gunicorn taskflow_project.wsgi --log-file -
