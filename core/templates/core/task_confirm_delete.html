@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Tapşırığı Silməyi Təsdiqlə</h2>
+    <hr>
+    <p>"<strong>{{ object.title }}</strong>" adlı tapşırığı həqiqətən silmək istədiyinizə əminsiniz?</p>
+    <p>Bu əməliyyat geri qaytarılmır.</p>
+
+    <form method="post" style="margin-top: 1em;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 10px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Bəli, Sil</button>
+        <a href="{% url 'project-detail' object.project.pk %}" style="margin-left: 10px; text-decoration: none; color: #007bff;">Ləğv Et</a>
+    </form>
+{% endblock %}

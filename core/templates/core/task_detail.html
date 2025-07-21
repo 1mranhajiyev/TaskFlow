@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Tapşırıq: {{ task.title }}</h2>
+    <p><strong>Aid olduğu layihə:</strong> <a href="{% url 'project-detail' task.project.pk %}">{{ task.project.name }}</a></p>
+    <hr>
+    
+    <p><strong>Status:</strong> {{ task.get_status_display }}</p>
+    <p><strong>Təyin edilib:</strong> {{ task.assignee.username }}</p>
+    <p><strong>Son icra tarixi:</strong> {{ task.due_date|date:"d F Y" }}</p>
+
+    <h4>Açıqlama:</h4>
+    <div style="background: #f4f4f4; padding: 1em; border-radius: 5px;">
+        {{ task.description|linebreaks }}
+    </div>
+
+    <div style="margin-top: 2em;">
+        <a href="{% url 'task-edit' task.pk %}">Redaktə et</a>
+        <a href="{% url 'project-detail' task.project.pk %}" style="margin-left: 1em;">Layihəyə qayıt</a>
+    </div>
+{% endblock %}

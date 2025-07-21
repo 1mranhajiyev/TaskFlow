@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ project.name }}</h2>
+    <p><strong>Yaradılma tarixi:</strong> {{ project.created_at|date:"d F Y" }}</p>
+    <hr>
+    <div class="project-description">
+        {{ project.description|linebreaks }}
+    </div>
+
+    <hr style="margin-top: 2em; margin-bottom: 1em;">
+
+    <h4>Bu Layihəyə Aid Tapşırıqlar</h4>
+    <div class="task-list">
+        <ul>
+            {% for task in project.tasks.all %}
+                <li>
+                    <a href="{% url 'task-detail' task.pk %}"><strong>{{ task.title }}</strong></a> - 
+                    <small>Status: {{ task.get_status_display }}</small>
+                    {% if task.assignee %}
+                        <small>| Təyin edilib: {{ task.assignee.username }}</small>
+                    {% endif %}
+
+                    {% if task.assignee == user %}
+                        <a href="{% url 'task-edit' task.pk %}" style="margin-left: 10px;">(Redaktə et)</a>
+                        <a href="{% url 'task-delete' task.pk %}" style="color: #dc3545;">(Sil)</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Bu layihəyə aid heç bir tapşırıq yoxdur.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <br>
+    <a href="{% url 'project-list' %}" style="display: inline-block; margin-top: 1em;">Bütün layihələrə qayıt</a>
+
+<div class="form-container" style="margin-top: 2em; padding: 1.5em; background: #f9f9f9; border-radius: 5px;">
+    <h4>Yeni Tapşırıq Əlavə Et</h4>
+    <form method="POST">
+        {% csrf_token %}
+        {{ task_form.as_p }}
+        <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Əlavə Et</button>
+    </form>
+</div>
+
+<br>
+<a href="{% url 'project-list' %}" style="display: inline-block; margin-top: 1em;">Bütün layihələrə qayıt</a>
+
+{% endblock %}

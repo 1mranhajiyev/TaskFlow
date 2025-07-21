@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TaskFlow</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 2em; max-width: 800px; margin: auto; background-color: #f4f4f4; }
+        .project { background: #fff; padding: 1em; margin-bottom: 1em; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        p { color: #666; }
+    </style>
+</head>
+<body>
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <h1><a href="{% url 'project-list' %}" style="text-decoration: none; color: inherit;">TaskFlow</a></h1>
+        <nav>
+            {% if user.is_authenticated %}
+                <span>Salam, <strong>{{ user.username }}</strong>!</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline; margin-left: 15px;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: #007bff; cursor: pointer; padding: 0; font-size: 1em; text-decoration: underline;">Çıxış</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Giriş</a>
+                <a href="{% url 'register' %}" style="margin-left: 15px;">Qeydiyyat</a>
+                {% endif %}
+        </nav>
+    </header>
+    <hr>
+    <main>
+        {% if messages %}
+            <div class="messages" style="margin-bottom: 1.5em;">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" 
+                        style="padding: 1rem; border: 1px solid transparent; border-radius: .25rem; background-color: #d4edda; color: #155724;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

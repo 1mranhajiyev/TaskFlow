@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Mövcud Layihələr</h2>
+
+    {% for project in projects %}
+        <div class="project">
+            <h3><a href="{% url 'project-detail' project.pk %}">{{ project.name }}</a></h3>
+            <p>{{ project.description|default:"Açıqlama verilməyib." }}</p>
+        </div>
+    {% empty %}
+        <p>Heç bir layihə tapılmadı. Admin panelindən yeni bir layihə əlavə edə bilərsiniz.</p>
+    {% endfor %}
+{% endblock %}

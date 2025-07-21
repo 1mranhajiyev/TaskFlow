@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Tapşırığı Redaktə Et</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Yadda Saxla</button>
+        <a href="{% url 'project-detail' object.project.pk %}">Ləğv Et</a>
+    </form>
+{% endblock %}
